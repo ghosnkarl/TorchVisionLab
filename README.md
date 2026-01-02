@@ -10,17 +10,17 @@ A comprehensive PyTorch learning lab designed to take you from fundamentals to p
 
 ## 📚 Course Structure
 
-### 01. Basics (Fundamentals) ✅ IN PROGRESS
+### 01. Basics (Fundamentals) ✅ COMPLETED
 
 Master PyTorch fundamentals, neural networks, and essential training concepts.
 
 - ✅ `00_introduction_to_machine_learning.ipynb` - ML concepts and terminology
 - ✅ `01_pytorch_fundamentals.ipynb` - Tensors, operations, and PyTorch basics
-- 🔜 `02_neural_networks_theory.ipynb` - Mathematical foundations
-- 🔜 `03_neural_networks_intro.ipynb` - Building your first neural network
-- 🔜 `04_classification.ipynb` - Classification tasks and techniques
-- 🔜 `05_loss_functions_and_optimizers.ipynb` - Optimization fundamentals
-- 🔜 `06_datasets_and_dataloaders.ipynb` - Custom datasets and data loading
+- ✅ `02_neural_networks_theory.ipynb` - Mathematical foundations
+- ✅ `03_neural_networks_intro.ipynb` - Building your first neural network
+- ✅ `04_classification.ipynb` - Classification tasks and techniques
+- ✅ `05_loss_functions_and_optimizers.ipynb` - Optimization fundamentals
+- ✅ `06_datasets_and_dataloaders.ipynb` - Custom datasets and data loading
 
 ### 02. Computer Vision 🔜 COMING SOON
 
