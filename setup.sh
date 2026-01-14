@@ -128,7 +128,7 @@ echo ""
 
 # Install Jupyter support
 echo "📥 Installing Jupyter support..."
-uv add jupyter ipykernel notebook ipywidgets
+uv add jupyter ipykernel notebook ipywidgets torchsummary
 echo ""
 
 # Create Jupyter kernel
