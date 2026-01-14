@@ -22,13 +22,13 @@ Master PyTorch fundamentals, neural networks, and essential training concepts.
 - ✅ `05_loss_functions_and_optimizers.ipynb` - Optimization fundamentals
 - ✅ `06_datasets_and_dataloaders.ipynb` - Custom datasets and data loading
 
-### 02. Computer Vision 🔜 COMING SOON
+### 02. Computer Vision 🔁 IN PROGRESS
 
 CNNs, transfer learning, object detection, and practical vision projects.
 
-- 🔜 `01_computer_vision.ipynb` - Introduction to CNNs and convolutions
-- 🔜 `02_transfer_learning.ipynb` - Using pre-trained models
-- 🔜 `03_experiment_tracking_tensorboard.ipynb` - TensorBoard integration
+- ✅ `01_computer_vision.ipynb` - Introduction to CNNs and convolutions
+- ✅ `02_transfer_learning.ipynb` - Using pre-trained models
+- ✅ `03_experiment_tracking_tensorboard.ipynb` - TensorBoard integration
 - 🔜 `04_data_augmentation_and_preprocessing.ipynb` - Image transformations
 - 🔜 `05_object_detection_fundamentals.ipynb` - Detection concepts
 - 🔜 `06_yolo_implementation.ipynb` - YOLO from scratch
