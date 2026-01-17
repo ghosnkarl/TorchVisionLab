@@ -30,9 +30,10 @@ CNNs, transfer learning, object detection, and practical vision projects.
 - ✅ `02_transfer_learning.ipynb` - Using pre-trained models
 - ✅ `03_experiment_tracking_tensorboard.ipynb` - TensorBoard integration
 - ✅ `04_data_augmentation_and_preprocessing.ipynb` - Image transformations
-- 🔜 `05_object_detection_fundamentals.ipynb` - Detection concepts
-- 🔜 `06_yolo_implementation.ipynb` - YOLO from scratch
-- 🔜 `07_image_classification_project.ipynb` - End-to-end classification
+- ✅ `05_experiment_tracking_mlflow.ipynb` - MLflow for tracking
+- 🔜 `06_object_detection_fundamentals.ipynb` - Detection concepts
+- 🔜 `07_yolo_implementation.ipynb` - YOLO from scratch
+- 🔜 `08_image_classification_project.ipynb` - End-to-end classification
 
 ### 03. Vision Transformers 🔜 COMING SOON
 
