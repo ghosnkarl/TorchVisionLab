@@ -1,59 +1,35 @@
 #!/bin/bash
 
 # PyTorch Project Dependencies Installer
-# This script sets up a new Python project with uv and installs all required dependencies
+# This script sets up a new Python project with pip and installs all required dependencies
 
 set -e  # Exit on error
 
 echo "==================================="
-echo "PyTorch Project Setup with UV"
+echo "PyTorch Project Setup with pip"
 echo "==================================="
 echo ""
 
-# Check if uv is installed
-if ! command -v uv &> /dev/null; then
-    echo "❌ uv is not installed. Installing uv..."
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    echo "✅ uv installed successfully"
-    echo ""
-    echo "⚠️  Please restart your shell and run this script again to complete setup."
-    exit 0
+# Detect platform first
+PLATFORM=$(uname -s)
+
+# Determine Python command based on platform
+if [[ "$PLATFORM" == MINGW* ]] || [[ "$PLATFORM" == MSYS* ]]; then
+    # Windows uses 'python' not 'python3'
+    PYTHON_CMD="python"
+else
+    # Linux/macOS uses 'python3'
+    PYTHON_CMD="python3"
 fi
 
-echo "✅ uv found: $(uv --version)"
+# Check if Python is installed
+if ! command -v $PYTHON_CMD &> /dev/null; then
+    echo "❌ Python is not installed. Please install Python 3.10 or higher."
+    exit 1
+fi
+
+echo "✅ Python found: $($PYTHON_CMD --version)"
 echo ""
-
-# Ask for Python version
-echo "Select Python version:"
-echo "  1) Python 3.11 (Recommended)"
-echo "  2) Python 3.10"
-echo "  3) Python 3.12"
-read -p "Enter choice [1-3] (default: 1): " python_choice
-python_choice=${python_choice:-1}
-
-case $python_choice in
-    1) PYTHON_VERSION="3.11" ;;
-    2) PYTHON_VERSION="3.10" ;;
-    3) PYTHON_VERSION="3.12" ;;
-    *) PYTHON_VERSION="3.11" ;;
-esac
-
-# Initialize uv project
-echo "🔧 Initializing uv project..."
-uv init --no-readme
-echo ""
-
-echo "📦 Setting Python version to $PYTHON_VERSION"
-uv python pin $PYTHON_VERSION
-echo ""
-
-# Create virtual environment
-echo "🔧 Creating virtual environment..."
-uv venv --python $PYTHON_VERSION
-echo ""
-
-# Detect platform
-PLATFORM=$(uname -s)
 
 if [[ "$PLATFORM" == "Darwin" ]]; then
     # macOS - use default PyPI (has MPS support for Apple Silicon)
@@ -63,7 +39,7 @@ elif [[ "$PLATFORM" == "Linux" ]] || [[ "$PLATFORM" == MINGW* ]] || [[ "$PLATFOR
     # Linux or Windows - ask for CUDA support
     echo "Select PyTorch installation type:"
     echo "  1) CUDA 12.8 (for NVIDIA GPUs - latest)"
-    echo "  2) CUDA 12.1 (for NVIDIA GPUs)"
+    echo "  2) CUDA 12.6 (for NVIDIA GPUs)"
     echo "  3) CUDA 11.8 (for older NVIDIA GPUs)"
     echo "  4) CPU only (no GPU support)"
     read -p "Enter choice [1-4] (default: 1): " cuda_choice
@@ -71,7 +47,7 @@ elif [[ "$PLATFORM" == "Linux" ]] || [[ "$PLATFORM" == MINGW* ]] || [[ "$PLATFOR
 
     case $cuda_choice in
         1) TORCH_INDEX="https://download.pytorch.org/whl/cu128" ;;
-        2) TORCH_INDEX="https://download.pytorch.org/whl/cu121" ;;
+        2) TORCH_INDEX="https://download.pytorch.org/whl/cu126" ;;
         3) TORCH_INDEX="https://download.pytorch.org/whl/cu118" ;;
         4) TORCH_INDEX="https://download.pytorch.org/whl/cpu" ;;
         *) TORCH_INDEX="https://download.pytorch.org/whl/cu128" ;;
@@ -83,64 +59,95 @@ else
 fi
 
 echo ""
+
+# Create virtual environment
+echo "🔧 Creating virtual environment..."
+$PYTHON_CMD -m venv .venv
+echo "✅ Virtual environment created"
+echo ""
+
+# Activate virtual environment
+echo "🔧 Activating virtual environment..."
+if [[ "$PLATFORM" == MINGW* ]] || [[ "$PLATFORM" == MSYS* ]]; then
+    # Windows (Git Bash)
+    source .venv/Scripts/activate
+else
+    # Linux/macOS
+    source .venv/bin/activate
+fi
+echo "✅ Virtual environment activated"
+echo ""
+
+# Upgrade pip
+echo "📦 Upgrading pip..."
+python -m pip install --upgrade pip
+echo ""
+
 echo "🚀 Installing dependencies..."
 echo ""
 
 # Install PyTorch
 echo "📥 Installing torch and torchvision..."
 if [ "$USE_CUSTOM_INDEX" = true ]; then
-    uv pip install torch torchvision --index-url $TORCH_INDEX
+    pip install torch torchvision --index-url $TORCH_INDEX
 else
-    uv add torch torchvision
+    pip install torch torchvision
 fi
 echo ""
 
 # Install PyTorch Lightning
 echo "📥 Installing PyTorch Lightning..."
-uv add pytorch-lightning
+pip install pytorch-lightning
 echo ""
 
 # Install data science stack
 echo "📥 Installing data science libraries..."
-uv add numpy pandas scikit-learn scipy
+pip install numpy pandas scikit-learn scipy
 echo ""
 
 # Install visualization libraries
 echo "📥 Installing visualization libraries..."
-uv add matplotlib seaborn
+pip install matplotlib seaborn
 echo ""
 
 # Install image and text processing
 echo "📥 Installing image and text processing libraries..."
-uv add pillow opencv-python
-uv add transformers torchtext
+pip install pillow opencv-python
+pip install transformers torchtext
 echo ""
 
 # Install experiment tracking
 echo "📥 Installing experiment tracking tools..."
-uv add tensorboard mlflow
+pip install tensorboard mlflow
 echo ""
 
 # Install utilities
 echo "📥 Installing utilities..."
-uv add tqdm pyyaml python-dotenv
+pip install tqdm pyyaml python-dotenv
 echo ""
 
 # Install Jupyter support
 echo "📥 Installing Jupyter support..."
-uv add jupyter ipykernel notebook ipywidgets torchsummary
+pip install jupyter ipykernel notebook ipywidgets torchsummary
 echo ""
 
 # Create Jupyter kernel
 echo "🔧 Creating Jupyter kernel..."
-uv run python -m ipykernel install --user --name=pytorch-env --display-name="Python (PyTorch)"
+python -m ipykernel install --user --name=pytorch-env --display-name="Python (PyTorch)"
 echo ""
 
 # Verify installation
 echo "✅ Verifying PyTorch installation..."
-uv run python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')"
+python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')"
 echo ""
 
 echo "==================================="
 echo "✅ Installation Complete!"
 echo "==================================="
+echo ""
+echo "To activate the virtual environment:"
+if [[ "$PLATFORM" == MINGW* ]] || [[ "$PLATFORM" == MSYS* ]]; then
+    echo "  source .venv/Scripts/activate"
+else
+    echo "  source .venv/bin/activate"
+fi
