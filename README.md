@@ -31,9 +31,6 @@ CNNs, transfer learning, object detection, and practical vision projects.
 - ✅ `03_experiment_tracking_tensorboard.ipynb` - TensorBoard integration
 - ✅ `04_data_augmentation_and_preprocessing.ipynb` - Image transformations
 - ✅ `05_experiment_tracking_mlflow.ipynb` - MLflow for tracking
-- 🔜 `06_object_detection_fundamentals.ipynb` - Detection concepts
-- 🔜 `07_yolo_implementation.ipynb` - YOLO from scratch
-- 🔜 `08_image_classification_project.ipynb` - End-to-end classification
 
 ### 03. Vision Transformers 🔜 COMING SOON
 
@@ -115,6 +112,12 @@ Deep dives into PyTorch internals, production training, and optimization techniq
 - 🔜 `07_production_training.ipynb` - LR scheduling, checkpointing, mixed precision
 - 🔜 `08_comprehensive_evaluation.ipynb` - Advanced metrics and model evaluation
 - 🔜 `09_regularization_mastery.ipynb` - Dropout, batch norm, weight decay
+
+### 10. Projects 🔁 IN PROGRESS
+
+Hands-on projects to apply learned concepts in real-world scenarios.
+
+- ✅ `01_pytorch_lightning_tutorial.ipynb` - PyTorch Lightning basics
 
 ## 🚀 Getting Started
 

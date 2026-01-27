@@ -22,3 +22,9 @@ Thumbs.db
 
 data/
 pyproject.toml
+
+logs
+mlruns
+models
+checkpoints/
+lightning_logs/
